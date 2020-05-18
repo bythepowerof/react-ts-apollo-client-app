@@ -12,40 +12,42 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-};
-
-export type RootQueryType = {
-   __typename?: 'RootQueryType';
-  book?: Maybe<Book>;
-  author?: Maybe<Author>;
-  books?: Maybe<Array<Maybe<Book>>>;
-  authors?: Maybe<Array<Maybe<Author>>>;
-};
-
-
-export type RootQueryTypeBookArgs = {
-  id?: Maybe<Scalars['ID']>;
-};
-
-
-export type RootQueryTypeAuthorArgs = {
-  id?: Maybe<Scalars['ID']>;
-};
-
-export type Book = {
-   __typename?: 'Book';
-  id?: Maybe<Scalars['ID']>;
-  name?: Maybe<Scalars['String']>;
-  genre?: Maybe<Scalars['String']>;
-  author?: Maybe<Author>;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type Author = {
    __typename?: 'Author';
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   age?: Maybe<Scalars['Int']>;
+  books?: Maybe<Array<Book>>;
+};
+
+export type Book = {
+   __typename?: 'Book';
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  genre?: Maybe<Scalars['String']>;
+  author: Author;
+};
+
+export type Query = {
+   __typename?: 'Query';
   books?: Maybe<Array<Maybe<Book>>>;
+  authors?: Maybe<Array<Maybe<Author>>>;
+  book?: Maybe<Book>;
+  author?: Maybe<Author>;
+};
+
+
+export type QueryBookArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryAuthorArgs = {
+  id: Scalars['ID'];
 };
 
 export type Mutation = {
@@ -67,6 +69,12 @@ export type MutationAddBookArgs = {
   authorId: Scalars['ID'];
 };
 
+export enum CacheControlScope {
+  Public = 'PUBLIC',
+  Private = 'PRIVATE'
+}
+
+
 export type AddBookMutationVariables = {
   name: Scalars['String'];
   genre: Scalars['String'];
@@ -86,7 +94,7 @@ export type BooksQueryVariables = {};
 
 
 export type BooksQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { books?: Maybe<Array<Maybe<(
     { __typename?: 'Book' }
     & Pick<Book, 'id' | 'name' | 'genre'>
@@ -99,18 +107,18 @@ export type BookQueryVariables = {
 
 
 export type BookQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { book?: Maybe<(
     { __typename?: 'Book' }
     & Pick<Book, 'id' | 'name' | 'genre'>
-    & { author?: Maybe<(
+    & { author: (
       { __typename?: 'Author' }
       & Pick<Author, 'id' | 'name' | 'age'>
-      & { books?: Maybe<Array<Maybe<(
+      & { books?: Maybe<Array<(
         { __typename?: 'Book' }
         & Pick<Book, 'id' | 'name'>
-      )>>> }
-    )> }
+      )>> }
+    ) }
   )> }
 );
 
@@ -118,7 +126,7 @@ export type AuthorsQueryVariables = {};
 
 
 export type AuthorsQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { authors?: Maybe<Array<Maybe<(
     { __typename?: 'Author' }
     & Pick<Author, 'id' | 'name'>
