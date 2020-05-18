@@ -1,0 +1,31 @@
+query Books{
+    books {
+        id
+        name
+        genre
+    }
+}
+
+query Book($id: ID!){
+    book(id: $id) {
+        id
+        name
+        genre
+        author {
+            id
+            name
+            age
+            books {
+                id
+                name
+            }
+        }
+    }
+}
+
+query Authors{
+    authors {
+        id
+        name
+    }
+}
