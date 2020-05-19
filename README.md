@@ -1,3 +1,17 @@
+# React Apollo Client
+Typescript based react application that implements the apollo client
+
+## Install
+`npm install`
+
+`npm run codegen`
+
+## Run App
+`npm start`
+
+
+---
+## React Default Description
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
