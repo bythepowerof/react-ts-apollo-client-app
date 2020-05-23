@@ -1,0 +1,27 @@
+
+query KmakeQuery($namespace: String!) {
+  
+  kmakeObjects(namespace: "default") {
+    __typename
+    name
+    namespace
+    status
+    ... on KmakeScheduleRun {
+      kmakename
+      kmakerunname
+      kmakeschedulename
+    }
+    ... on KmakeRun {
+      kmakename
+    }
+    ... on KmakeNowScheduler {
+      monitor
+    }
+    ... on Kmake {
+      variables {
+        key
+        value
+      }
+    }
+  }
+  }
