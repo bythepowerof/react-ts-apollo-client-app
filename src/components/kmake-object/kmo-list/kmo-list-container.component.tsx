@@ -1,4 +1,3 @@
-// import { BooksDocument, BooksQuery, BooksQueryVariables } from '../../../generated/graphql';
 import { KmakeQueryDocument, KmakeQueryQuery, KmakeQueryQueryVariables } from '../../../generated/kmakegql';
 
 import { useQuery } from '@apollo/react-hooks';

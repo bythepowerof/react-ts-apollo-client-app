@@ -11,13 +11,13 @@ interface Props {
 
 const KmoListComponent: React.FC<Props> = ({ data }) => {
   /* Hooks */
-  const [selectedBookId, setSelectedBookId] = useState('');
+  const [selectedKmoId, setSelectedKmoId] = useState('');
 
   /* Functions */
   const genList = (data: any) => {
     return !!data.kmakeObjects && data.kmakeObjects.map((kmakeObject: KmakeObject | null) =>
       !!kmakeObject && (
-        <li className="kmo-list__entry" key={ kmakeObject.name! } onClick={() => setSelectedBookId(kmakeObject.name!)}>
+        <li className="kmo-list__entry" key={ kmakeObject.name! } onClick={() => setSelectedKmoId(kmakeObject.name!)}>
           <div className="kmo-list__entry-details">
             <h3>{ kmakeObject.name }</h3>
             <span>-</span>
@@ -34,11 +34,11 @@ const KmoListComponent: React.FC<Props> = ({ data }) => {
   /* Template */
 
   return (
-    <div className="book-list-wrapper">
-      <ul className="book-list">
+    <div className="kmo-list-wrapper">
+      <ul className="kmo-list">
         { genList(data) }
       </ul>
-      <KmakeDetailContainerComponent namespace={selectedBookId}/>
+      <KmakeDetailContainerComponent namespace={selectedKmoId}/>
     </div>
   );
 };

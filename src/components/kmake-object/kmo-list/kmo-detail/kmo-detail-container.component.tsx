@@ -4,7 +4,7 @@ import { KmakeQueryDocument, KmakeQueryQuery, KmakeQueryQueryVariables } from '.
 import KmakeDetailComponent, { KmoDetailProps } from './kmo-detail.component';
 
 
-const BookDetailContainerComponent = (props: KmoDetailProps) => {
+const KmoDetailContainerComponent = (props: KmoDetailProps) => {
   const {data, error ,loading} = useQuery<KmakeQueryQuery, KmakeQueryQueryVariables>(KmakeQueryDocument, {
     variables: {
       namespace: props.namespace
@@ -21,4 +21,4 @@ const BookDetailContainerComponent = (props: KmoDetailProps) => {
   return <KmakeDetailComponent data={data}/>
 };
 
-export default BookDetailContainerComponent;
+export default KmoDetailContainerComponent;

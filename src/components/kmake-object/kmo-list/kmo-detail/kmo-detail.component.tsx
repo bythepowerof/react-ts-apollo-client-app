@@ -19,13 +19,13 @@ const KmoDetailComponent: React.FC<Props> = ({ data}) => {
         <p>Genre: {kmo.name}</p>
         <p>Author: {kmo.name}</p>
         <p>All kmo by this author</p>
-        {/* <ul className="other-kmos">
+        { <ul className="other-kmos">
           {
-            !!kmo.author && !!kmo.author.books && kmo.author.books.map((kmo: KmakeObject | null) =>
-              !!kmo && ( <li key={kmo.name!}>{kmo.name}</li> )
-            )
+            // !!kmo.name && !!kmo.name && kmo.author.books.map((kmo: KmakeObject | null) =>
+            //   !!kmo && ( <li key={kmo.name!}>{kmo.name}</li> )
+            // )
           }
-        </ul> */}
+        </ul> }
       </div>
     );
   };
