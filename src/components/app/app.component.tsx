@@ -58,7 +58,7 @@ const client = new ApolloClient({
 const AppComponent = () => (
   <ApolloProvider client={client}>
     <div className={'main'}>
-      <KmoListContainer/>
+      <KmoListContainer namespace="default"/>
       {/* <BookListContainer/>
       <AddBookComponent /> */}
     </div>

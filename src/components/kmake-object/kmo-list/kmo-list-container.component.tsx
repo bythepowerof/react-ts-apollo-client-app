@@ -5,8 +5,8 @@ import { useQuery } from '@apollo/react-hooks';
 import KmoListComponent from './kmo-list.component';
 import React from 'react';
 
-const KmoListContainer = () => {
-  const {data, error ,loading} = useQuery<KmakeQueryQuery, KmakeQueryQueryVariables>(KmakeQueryDocument);
+const KmoListContainer = (props: KmakeQueryQueryVariables) => {
+  const {data, error ,loading} = useQuery<KmakeQueryQuery, KmakeQueryQueryVariables>(KmakeQueryDocument, { variables: { namespace: props.namespace } });
   if (loading) {
     return <div>Loading...</div>;
   }

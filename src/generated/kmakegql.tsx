@@ -14,6 +14,13 @@ export type Scalars = {
   Float: number;
 };
 
+export type KmakeScheduleForce = KmakeScheduleRunOp & {
+   __typename?: 'KmakeScheduleForce';
+  dummy: Scalars['String'];
+  operation: Scalars['String'];
+  recurse: Scalars['String'];
+};
+
 export type NewReset = {
   namespace: Scalars['String'];
   kmakescheduler: Scalars['String'];
@@ -59,13 +66,6 @@ export type KmakeScheduleReset = KmakeScheduleRunOp & {
   full: Scalars['String'];
 };
 
-export type KmakeScheduleForce = KmakeScheduleRunOp & {
-   __typename?: 'KmakeScheduleForce';
-  dummy: Scalars['String'];
-  operation: Scalars['String'];
-  recurse: Scalars['String'];
-};
-
 export enum JobType {
   Job = 'JOB',
   Dummy = 'DUMMY',
@@ -99,6 +99,10 @@ export type KmakeScheduleRun = KmakeObject & {
 };
 
 export type KmakeScheduleRunOp = {
+  dummy?: Maybe<Scalars['String']>;
+};
+
+export type KmakeRunOp = {
   dummy?: Maybe<Scalars['String']>;
 };
 
@@ -200,17 +204,13 @@ export type KmakeObject = {
   status?: Maybe<Scalars['String']>;
 };
 
-export type KmakeRunOp = {
-  dummy?: Maybe<Scalars['String']>;
+export type SubNamespace = {
+  namespace: Scalars['String'];
 };
 
 export type KmakeScheduleRunStart = KmakeScheduleRunOp & {
    __typename?: 'KmakeScheduleRunStart';
   dummy: Scalars['String'];
-};
-
-export type SubNamespace = {
-  namespace: Scalars['String'];
 };
 
 export type KmakeRunJob = KmakeRunOp & {
@@ -301,7 +301,9 @@ export type KmakeScheduleDelete = KmakeScheduleRunOp & {
   dummy: Scalars['String'];
 };
 
-export type KmakeQueryQueryVariables = {};
+export type KmakeQueryQueryVariables = {
+  namespace: Scalars['String'];
+};
 
 
 export type KmakeQueryQuery = (
@@ -327,8 +329,8 @@ export type KmakeQueryQuery = (
 
 
 export const KmakeQueryDocument = gql`
-    query KmakeQuery {
-  kmakeObjects(namespace: "default") {
+    query KmakeQuery($namespace: String!) {
+  kmakeObjects(namespace: $namespace) {
     __typename
     name
     namespace
@@ -353,7 +355,7 @@ export const KmakeQueryDocument = gql`
   }
 }
     `;
-export type KmakeQueryComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<KmakeQueryQuery, KmakeQueryQueryVariables>, 'query'>;
+export type KmakeQueryComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<KmakeQueryQuery, KmakeQueryQueryVariables>, 'query'> & ({ variables: KmakeQueryQueryVariables; skip?: boolean; } | { skip: boolean; });
 
     export const KmakeQueryComponent = (props: KmakeQueryComponentProps) => (
       <ApolloReactComponents.Query<KmakeQueryQuery, KmakeQueryQueryVariables> query={KmakeQueryDocument} {...props} />
