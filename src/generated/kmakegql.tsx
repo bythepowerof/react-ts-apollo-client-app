@@ -14,22 +14,92 @@ export type Scalars = {
   Float: number;
 };
 
-export type KmakeRunFileWait = KmakeRunOp & {
-   __typename?: 'KmakeRunFileWait';
-  dummy: Scalars['String'];
-  files?: Maybe<Array<Scalars['String']>>;
+export type NewReset = {
+  namespace: Scalars['String'];
+  kmakescheduler: Scalars['String'];
+  full: Scalars['Boolean'];
 };
 
-export type KmakeScheduleRunRestart = KmakeScheduleRunOp & {
-   __typename?: 'KmakeScheduleRunRestart';
-  dummy: Scalars['String'];
-  run: Scalars['String'];
+export type Kv = {
+   __typename?: 'KV';
+  key: Scalars['String'];
+  value: Scalars['String'];
 };
 
-export type KmakeScheduleRunStop = KmakeScheduleRunOp & {
-   __typename?: 'KmakeScheduleRunStop';
+export type Rule = {
+   __typename?: 'Rule';
+  targets: Array<Maybe<Scalars['String']>>;
+  doublecolon: Scalars['Boolean'];
+  commands: Array<Maybe<Scalars['String']>>;
+  prereqs: Array<Maybe<Scalars['String']>>;
+  targetpattern: Scalars['String'];
+};
+
+export type KmakeRun = KmakeObject & {
+   __typename?: 'KmakeRun';
+  name: Scalars['String'];
+  namespace: Scalars['String'];
+  status: Scalars['String'];
+  kmakename?: Maybe<Scalars['String']>;
+  operation?: Maybe<KmakeRunOp>;
+  schedulerun?: Maybe<Array<Maybe<KmakeScheduleRun>>>;
+};
+
+
+export type KmakeRunSchedulerunArgs = {
+  kmakescheduler?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  runtype?: Maybe<RunType>;
+};
+
+export type KmakeScheduleReset = KmakeScheduleRunOp & {
+   __typename?: 'KmakeScheduleReset';
   dummy: Scalars['String'];
-  run: Scalars['String'];
+  recurse: Scalars['String'];
+  full: Scalars['String'];
+};
+
+export type KmakeScheduleForce = KmakeScheduleRunOp & {
+   __typename?: 'KmakeScheduleForce';
+  dummy: Scalars['String'];
+  operation: Scalars['String'];
+  recurse: Scalars['String'];
+};
+
+export enum JobType {
+  Job = 'JOB',
+  Dummy = 'DUMMY',
+  Filewait = 'FILEWAIT'
+}
+
+export enum RunType {
+  Start = 'START',
+  Restart = 'RESTART',
+  Stop = 'STOP',
+  Delete = 'DELETE',
+  Create = 'CREATE',
+  Reset = 'RESET',
+  Force = 'FORCE'
+}
+
+export type KmakeRunDummy = KmakeRunOp & {
+   __typename?: 'KmakeRunDummy';
+  dummy: Scalars['String'];
+};
+
+export type KmakeScheduleRun = KmakeObject & {
+   __typename?: 'KmakeScheduleRun';
+  name: Scalars['String'];
+  namespace: Scalars['String'];
+  status: Scalars['String'];
+  kmakename?: Maybe<Scalars['String']>;
+  kmakerunname?: Maybe<Scalars['String']>;
+  kmakeschedulename?: Maybe<Scalars['String']>;
+  operation: KmakeScheduleRunOp;
+};
+
+export type KmakeScheduleRunOp = {
+  dummy?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -84,39 +154,14 @@ export type QueryKmakeschedulerunsArgs = {
   runtype?: Maybe<RunType>;
 };
 
-export type Namespace = {
-   __typename?: 'Namespace';
-  name: Scalars['String'];
-  kmakes: Array<Maybe<Kmake>>;
+export type Subscription = {
+   __typename?: 'Subscription';
+  changed: KmakeObject;
 };
 
 
-export type NamespaceKmakesArgs = {
-  name?: Maybe<Scalars['String']>;
-};
-
-export type Rule = {
-   __typename?: 'Rule';
-  targets: Array<Maybe<Scalars['String']>>;
-  doublecolon: Scalars['Boolean'];
-  commands: Array<Maybe<Scalars['String']>>;
-  prereqs: Array<Maybe<Scalars['String']>>;
-  targetpattern: Scalars['String'];
-};
-
-export type KmakeRunJob = KmakeRunOp & {
-   __typename?: 'KmakeRunJob';
-  dummy: Scalars['String'];
-  targets: Array<Maybe<Scalars['String']>>;
-  image: Scalars['String'];
-  command?: Maybe<Array<Maybe<Scalars['String']>>>;
-  args?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export type KmakeObject = {
-  name?: Maybe<Scalars['String']>;
-  namespace?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
+export type SubscriptionChangedArgs = {
+  input?: Maybe<SubNamespace>;
 };
 
 export type Kmake = KmakeObject & {
@@ -135,32 +180,63 @@ export type KmakeRunsArgs = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type KmakeScheduleRunStop = KmakeScheduleRunOp & {
+   __typename?: 'KmakeScheduleRunStop';
+  dummy: Scalars['String'];
+  run: Scalars['String'];
+};
+
+export type KmakeScheduler = {
+  name?: Maybe<Scalars['String']>;
+  namespace?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  variables?: Maybe<Array<Maybe<Kv>>>;
+  monitor?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type KmakeObject = {
+  name?: Maybe<Scalars['String']>;
+  namespace?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+};
+
+export type KmakeRunOp = {
+  dummy?: Maybe<Scalars['String']>;
+};
+
 export type KmakeScheduleRunStart = KmakeScheduleRunOp & {
    __typename?: 'KmakeScheduleRunStart';
   dummy: Scalars['String'];
 };
 
+export type SubNamespace = {
+  namespace: Scalars['String'];
+};
+
+export type KmakeRunJob = KmakeRunOp & {
+   __typename?: 'KmakeRunJob';
+  dummy: Scalars['String'];
+  targets: Array<Maybe<Scalars['String']>>;
+  image: Scalars['String'];
+  command?: Maybe<Array<Maybe<Scalars['String']>>>;
+  args?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type KmakeRunFileWait = KmakeRunOp & {
+   __typename?: 'KmakeRunFileWait';
+  dummy: Scalars['String'];
+  files?: Maybe<Array<Scalars['String']>>;
+};
+
+export type KmakeScheduleRunRestart = KmakeScheduleRunOp & {
+   __typename?: 'KmakeScheduleRunRestart';
+  dummy: Scalars['String'];
+  run: Scalars['String'];
+};
+
 export type KmakeScheduleCreate = KmakeScheduleRunOp & {
    __typename?: 'KmakeScheduleCreate';
   dummy: Scalars['String'];
-};
-
-export type RunLevelIn = {
-  namespace: Scalars['String'];
-  kmakerun: Scalars['String'];
-  kmakescheduler: Scalars['String'];
-};
-
-export type KmakeRunDummy = KmakeRunOp & {
-   __typename?: 'KmakeRunDummy';
-  dummy: Scalars['String'];
-};
-
-export type KmakeScheduleForce = KmakeScheduleRunOp & {
-   __typename?: 'KmakeScheduleForce';
-  dummy: Scalars['String'];
-  operation: Scalars['String'];
-  recurse: Scalars['String'];
 };
 
 export type KmakeNowScheduler = KmakeScheduler & KmakeObject & {
@@ -181,20 +257,10 @@ export type KmakeNowSchedulerSchedulerunsArgs = {
   runtype?: Maybe<RunType>;
 };
 
-export type KmakeScheduler = {
-  name?: Maybe<Scalars['String']>;
-  namespace?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-  variables?: Maybe<Array<Maybe<Kv>>>;
-  monitor?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export type KmakeScheduleRunOp = {
-  dummy?: Maybe<Scalars['String']>;
-};
-
-export type SubNamespace = {
+export type RunLevelIn = {
   namespace: Scalars['String'];
+  kmakerun: Scalars['String'];
+  kmakescheduler: Scalars['String'];
 };
 
 export type Mutation = {
@@ -219,96 +285,34 @@ export type MutationRestartArgs = {
   input: RunLevelIn;
 };
 
-export type Kv = {
-   __typename?: 'KV';
-  key: Scalars['String'];
-  value: Scalars['String'];
-};
-
-export type KmakeRun = KmakeObject & {
-   __typename?: 'KmakeRun';
+export type Namespace = {
+   __typename?: 'Namespace';
   name: Scalars['String'];
-  namespace: Scalars['String'];
-  status: Scalars['String'];
-  kmakename?: Maybe<Scalars['String']>;
-  operation?: Maybe<KmakeRunOp>;
-  schedulerun?: Maybe<Array<Maybe<KmakeScheduleRun>>>;
+  kmakes: Array<Maybe<Kmake>>;
 };
 
 
-export type KmakeRunSchedulerunArgs = {
-  kmakescheduler?: Maybe<Scalars['String']>;
+export type NamespaceKmakesArgs = {
   name?: Maybe<Scalars['String']>;
-  runtype?: Maybe<RunType>;
 };
-
-export type KmakeScheduleReset = KmakeScheduleRunOp & {
-   __typename?: 'KmakeScheduleReset';
-  dummy: Scalars['String'];
-  recurse: Scalars['String'];
-  full: Scalars['String'];
-};
-
-export enum RunType {
-  Start = 'START',
-  Restart = 'RESTART',
-  Stop = 'STOP',
-  Delete = 'DELETE',
-  Create = 'CREATE',
-  Reset = 'RESET',
-  Force = 'FORCE'
-}
 
 export type KmakeScheduleDelete = KmakeScheduleRunOp & {
    __typename?: 'KmakeScheduleDelete';
   dummy: Scalars['String'];
 };
 
-export type NewReset = {
-  namespace: Scalars['String'];
-  kmakescheduler: Scalars['String'];
-  full: Scalars['Boolean'];
-};
-
-export type Subscription = {
-   __typename?: 'Subscription';
-  changed: KmakeObject;
-};
-
-
-export type SubscriptionChangedArgs = {
-  input?: Maybe<SubNamespace>;
-};
-
-export enum JobType {
-  Job = 'JOB',
-  Dummy = 'DUMMY',
-  Filewait = 'FILEWAIT'
-}
-
-export type KmakeScheduleRun = KmakeObject & {
-   __typename?: 'KmakeScheduleRun';
-  name: Scalars['String'];
-  namespace: Scalars['String'];
-  status: Scalars['String'];
-  kmakename?: Maybe<Scalars['String']>;
-  kmakerunname?: Maybe<Scalars['String']>;
-  kmakeschedulename?: Maybe<Scalars['String']>;
-  operation: KmakeScheduleRunOp;
-};
-
-export type KmakeRunOp = {
-  dummy?: Maybe<Scalars['String']>;
-};
-
-export type KmakeQueryQueryVariables = {
-  namespace: Scalars['String'];
-};
+export type KmakeQueryQueryVariables = {};
 
 
 export type KmakeQueryQuery = (
   { __typename?: 'Query' }
   & { kmakeObjects: Array<Maybe<(
+    { __typename: 'KmakeRun' }
+    & Pick<KmakeRun, 'kmakename' | 'name' | 'namespace' | 'status'>
+  ) | (
+    { __typename: 'KmakeScheduleRun' }
+    & Pick<KmakeScheduleRun, 'kmakename' | 'kmakerunname' | 'kmakeschedulename' | 'name' | 'namespace' | 'status'>
+  ) | (
     { __typename: 'Kmake' }
     & Pick<Kmake, 'name' | 'namespace' | 'status'>
     & { variables: Array<Maybe<(
@@ -318,18 +322,12 @@ export type KmakeQueryQuery = (
   ) | (
     { __typename: 'KmakeNowScheduler' }
     & Pick<KmakeNowScheduler, 'monitor' | 'name' | 'namespace' | 'status'>
-  ) | (
-    { __typename: 'KmakeRun' }
-    & Pick<KmakeRun, 'kmakename' | 'name' | 'namespace' | 'status'>
-  ) | (
-    { __typename: 'KmakeScheduleRun' }
-    & Pick<KmakeScheduleRun, 'kmakename' | 'kmakerunname' | 'kmakeschedulename' | 'name' | 'namespace' | 'status'>
   )>> }
 );
 
 
 export const KmakeQueryDocument = gql`
-    query KmakeQuery($namespace: String!) {
+    query KmakeQuery {
   kmakeObjects(namespace: "default") {
     __typename
     name
@@ -355,7 +353,7 @@ export const KmakeQueryDocument = gql`
   }
 }
     `;
-export type KmakeQueryComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<KmakeQueryQuery, KmakeQueryQueryVariables>, 'query'> & ({ variables: KmakeQueryQueryVariables; skip?: boolean; } | { skip: boolean; });
+export type KmakeQueryComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<KmakeQueryQuery, KmakeQueryQueryVariables>, 'query'>;
 
     export const KmakeQueryComponent = (props: KmakeQueryComponentProps) => (
       <ApolloReactComponents.Query<KmakeQueryQuery, KmakeQueryQueryVariables> query={KmakeQueryDocument} {...props} />

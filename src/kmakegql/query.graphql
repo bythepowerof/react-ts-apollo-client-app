@@ -1,5 +1,5 @@
 
-query KmakeQuery($namespace: String!) {
+query KmakeQuery {
   
   kmakeObjects(namespace: "default") {
     __typename

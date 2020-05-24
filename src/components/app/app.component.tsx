@@ -1,6 +1,5 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
-// import ApolloClient from 'apollo-boost';
 import { ApolloClient } from 'apollo-client';
 
 import { HttpLink } from 'apollo-link-http';
@@ -9,8 +8,13 @@ import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-import BookListContainer from '../book/book-list/book-list-container.component';
-import { AddBookComponent } from '../book/add-book/add-book.component';
+import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import introspectionQueryResultData from '../../generated/fragmentTypes.json';
+
+// import BookListContainer from '../book/book-list/book-list-container.component';
+// import { AddBookComponent } from '../book/add-book/add-book.component';
+import KmoListContainer from '../kmake-object/kmo-list/kmo-list-container.component';
+
 import './app.component.css'
 
 const httpLink = new HttpLink({
@@ -39,7 +43,12 @@ const link = split(
   httpLink,
 );
 
-const cache = new InMemoryCache({  });
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
+
+const cache = new InMemoryCache({ fragmentMatcher });
+
 
 const client = new ApolloClient({
   cache,
@@ -49,8 +58,9 @@ const client = new ApolloClient({
 const AppComponent = () => (
   <ApolloProvider client={client}>
     <div className={'main'}>
-      <BookListContainer/>
-      <AddBookComponent />
+      <KmoListContainer/>
+      {/* <BookListContainer/>
+      <AddBookComponent /> */}
     </div>
   </ApolloProvider>
 );
