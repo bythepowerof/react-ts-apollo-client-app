@@ -14,6 +14,110 @@ export type Scalars = {
   Float: number;
 };
 
+export type SubNamespace = {
+  namespace: Scalars['String'];
+};
+
+export type KmakeScheduleRunStart = KmakeScheduleRunOp & {
+   __typename?: 'KmakeScheduleRunStart';
+  dummy: Scalars['String'];
+};
+
+export type KmakeRunJob = KmakeRunOp & {
+   __typename?: 'KmakeRunJob';
+  dummy: Scalars['String'];
+  targets: Array<Maybe<Scalars['String']>>;
+  image: Scalars['String'];
+  command?: Maybe<Array<Maybe<Scalars['String']>>>;
+  args?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type KmakeRunFileWait = KmakeRunOp & {
+   __typename?: 'KmakeRunFileWait';
+  dummy: Scalars['String'];
+  files?: Maybe<Array<Scalars['String']>>;
+};
+
+export type KmakeScheduleRunRestart = KmakeScheduleRunOp & {
+   __typename?: 'KmakeScheduleRunRestart';
+  dummy: Scalars['String'];
+  run: Scalars['String'];
+};
+
+export type KmakeScheduleCreate = KmakeScheduleRunOp & {
+   __typename?: 'KmakeScheduleCreate';
+  dummy: Scalars['String'];
+};
+
+export type KmakeNowScheduler = KmakeScheduler & KmakeObject & {
+   __typename?: 'KmakeNowScheduler';
+  name?: Maybe<Scalars['String']>;
+  namespace?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  variables?: Maybe<Array<Maybe<Kv>>>;
+  monitor?: Maybe<Array<Maybe<Scalars['String']>>>;
+  scheduleruns: Array<Maybe<KmakeScheduleRun>>;
+};
+
+
+export type KmakeNowSchedulerSchedulerunsArgs = {
+  kmake?: Maybe<Scalars['String']>;
+  kmakerun?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  runtype?: Maybe<RunType>;
+};
+
+export type RunLevelIn = {
+  namespace: Scalars['String'];
+  kmakerun: Scalars['String'];
+  kmakescheduler: Scalars['String'];
+};
+
+export type Mutation = {
+   __typename?: 'Mutation';
+  reset: KmakeScheduleRun;
+  stop: KmakeScheduleRun;
+  restart: KmakeScheduleRun;
+};
+
+
+export type MutationResetArgs = {
+  input: NewReset;
+};
+
+
+export type MutationStopArgs = {
+  input: RunLevelIn;
+};
+
+
+export type MutationRestartArgs = {
+  input: RunLevelIn;
+};
+
+export type Namespace = {
+   __typename?: 'Namespace';
+  name: Scalars['String'];
+  kmakes: Array<Maybe<Kmake>>;
+};
+
+
+export type NamespaceKmakesArgs = {
+  name?: Maybe<Scalars['String']>;
+};
+
+export type KmakeScheduleDelete = KmakeScheduleRunOp & {
+   __typename?: 'KmakeScheduleDelete';
+  dummy: Scalars['String'];
+};
+
+export type KmakeScheduleReset = KmakeScheduleRunOp & {
+   __typename?: 'KmakeScheduleReset';
+  dummy: Scalars['String'];
+  recurse: Scalars['String'];
+  full: Scalars['String'];
+};
+
 export type KmakeScheduleForce = KmakeScheduleRunOp & {
    __typename?: 'KmakeScheduleForce';
   dummy: Scalars['String'];
@@ -59,13 +163,6 @@ export type KmakeRunSchedulerunArgs = {
   runtype?: Maybe<RunType>;
 };
 
-export type KmakeScheduleReset = KmakeScheduleRunOp & {
-   __typename?: 'KmakeScheduleReset';
-  dummy: Scalars['String'];
-  recurse: Scalars['String'];
-  full: Scalars['String'];
-};
-
 export enum JobType {
   Job = 'JOB',
   Dummy = 'DUMMY',
@@ -100,6 +197,12 @@ export type KmakeScheduleRun = KmakeObject & {
 
 export type KmakeScheduleRunOp = {
   dummy?: Maybe<Scalars['String']>;
+};
+
+export type KmakeObject = {
+  name?: Maybe<Scalars['String']>;
+  namespace?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
 };
 
 export type KmakeRunOp = {
@@ -198,109 +301,6 @@ export type KmakeScheduler = {
   monitor?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type KmakeObject = {
-  name?: Maybe<Scalars['String']>;
-  namespace?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-};
-
-export type SubNamespace = {
-  namespace: Scalars['String'];
-};
-
-export type KmakeScheduleRunStart = KmakeScheduleRunOp & {
-   __typename?: 'KmakeScheduleRunStart';
-  dummy: Scalars['String'];
-};
-
-export type KmakeRunJob = KmakeRunOp & {
-   __typename?: 'KmakeRunJob';
-  dummy: Scalars['String'];
-  targets: Array<Maybe<Scalars['String']>>;
-  image: Scalars['String'];
-  command?: Maybe<Array<Maybe<Scalars['String']>>>;
-  args?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export type KmakeRunFileWait = KmakeRunOp & {
-   __typename?: 'KmakeRunFileWait';
-  dummy: Scalars['String'];
-  files?: Maybe<Array<Scalars['String']>>;
-};
-
-export type KmakeScheduleRunRestart = KmakeScheduleRunOp & {
-   __typename?: 'KmakeScheduleRunRestart';
-  dummy: Scalars['String'];
-  run: Scalars['String'];
-};
-
-export type KmakeScheduleCreate = KmakeScheduleRunOp & {
-   __typename?: 'KmakeScheduleCreate';
-  dummy: Scalars['String'];
-};
-
-export type KmakeNowScheduler = KmakeScheduler & KmakeObject & {
-   __typename?: 'KmakeNowScheduler';
-  name?: Maybe<Scalars['String']>;
-  namespace?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-  variables?: Maybe<Array<Maybe<Kv>>>;
-  monitor?: Maybe<Array<Maybe<Scalars['String']>>>;
-  scheduleruns: Array<Maybe<KmakeScheduleRun>>;
-};
-
-
-export type KmakeNowSchedulerSchedulerunsArgs = {
-  kmake?: Maybe<Scalars['String']>;
-  kmakerun?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  runtype?: Maybe<RunType>;
-};
-
-export type RunLevelIn = {
-  namespace: Scalars['String'];
-  kmakerun: Scalars['String'];
-  kmakescheduler: Scalars['String'];
-};
-
-export type Mutation = {
-   __typename?: 'Mutation';
-  reset: KmakeScheduleRun;
-  stop: KmakeScheduleRun;
-  restart: KmakeScheduleRun;
-};
-
-
-export type MutationResetArgs = {
-  input: NewReset;
-};
-
-
-export type MutationStopArgs = {
-  input: RunLevelIn;
-};
-
-
-export type MutationRestartArgs = {
-  input: RunLevelIn;
-};
-
-export type Namespace = {
-   __typename?: 'Namespace';
-  name: Scalars['String'];
-  kmakes: Array<Maybe<Kmake>>;
-};
-
-
-export type NamespaceKmakesArgs = {
-  name?: Maybe<Scalars['String']>;
-};
-
-export type KmakeScheduleDelete = KmakeScheduleRunOp & {
-   __typename?: 'KmakeScheduleDelete';
-  dummy: Scalars['String'];
-};
-
 export type KmakeQueryQueryVariables = {
   namespace: Scalars['String'];
 };
@@ -309,6 +309,9 @@ export type KmakeQueryQueryVariables = {
 export type KmakeQueryQuery = (
   { __typename?: 'Query' }
   & { kmakeObjects: Array<Maybe<(
+    { __typename: 'KmakeNowScheduler' }
+    & Pick<KmakeNowScheduler, 'monitor' | 'name' | 'namespace' | 'status'>
+  ) | (
     { __typename: 'KmakeRun' }
     & Pick<KmakeRun, 'kmakename' | 'name' | 'namespace' | 'status'>
   ) | (
@@ -321,10 +324,23 @@ export type KmakeQueryQuery = (
       { __typename?: 'KV' }
       & Pick<Kv, 'key' | 'value'>
     )>> }
-  ) | (
-    { __typename: 'KmakeNowScheduler' }
-    & Pick<KmakeNowScheduler, 'monitor' | 'name' | 'namespace' | 'status'>
   )>> }
+);
+
+export type ResetMutationVariables = {
+  namespace: Scalars['String'];
+  scheduler: Scalars['String'];
+  full: Scalars['Boolean'];
+};
+
+
+export type ResetMutation = (
+  { __typename?: 'Mutation' }
+  & { reset: (
+    { __typename?: 'KmakeScheduleRun' }
+    & Pick<KmakeScheduleRun, 'kmakename' | 'kmakerunname' | 'kmakeschedulename' | 'name'>
+    & { operation: { __typename: 'KmakeScheduleRunStart' } | { __typename: 'KmakeScheduleRunRestart' } | { __typename: 'KmakeScheduleCreate' } | { __typename: 'KmakeScheduleDelete' } | { __typename: 'KmakeScheduleReset' } | { __typename: 'KmakeScheduleForce' } | { __typename: 'KmakeScheduleRunStop' } }
+  ) }
 );
 
 
@@ -375,3 +391,38 @@ export function withKmakeQuery<TProps, TChildProps = {}, TDataName extends strin
     });
 };
 export type KmakeQueryQueryResult = ApolloReactCommon.QueryResult<KmakeQueryQuery, KmakeQueryQueryVariables>;
+export const ResetDocument = gql`
+    mutation Reset($namespace: String!, $scheduler: String!, $full: Boolean!) {
+  reset(input: {namespace: $namespace, kmakescheduler: $scheduler, full: $full}) {
+    kmakename
+    kmakerunname
+    kmakeschedulename
+    operation {
+      __typename
+    }
+    name
+  }
+}
+    `;
+export type ResetMutationFn = ApolloReactCommon.MutationFunction<ResetMutation, ResetMutationVariables>;
+export type ResetComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<ResetMutation, ResetMutationVariables>, 'mutation'>;
+
+    export const ResetComponent = (props: ResetComponentProps) => (
+      <ApolloReactComponents.Mutation<ResetMutation, ResetMutationVariables> mutation={ResetDocument} {...props} />
+    );
+    
+export type ResetProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<ResetMutation, ResetMutationVariables>
+    } & TChildProps;
+export function withReset<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  ResetMutation,
+  ResetMutationVariables,
+  ResetProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, ResetMutation, ResetMutationVariables, ResetProps<TChildProps, TDataName>>(ResetDocument, {
+      alias: 'reset',
+      ...operationOptions
+    });
+};
+export type ResetMutationResult = ApolloReactCommon.MutationResult<ResetMutation>;
+export type ResetMutationOptions = ApolloReactCommon.BaseMutationOptions<ResetMutation, ResetMutationVariables>;

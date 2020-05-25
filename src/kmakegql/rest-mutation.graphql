@@ -1,0 +1,11 @@
+mutation  Reset($namespace: String!, $scheduler: String!, $full: Boolean!){
+  reset(input:{ namespace: $namespace, kmakescheduler: $scheduler, full: $full}) {
+    kmakename
+    kmakerunname
+    kmakeschedulename
+    operation {
+      __typename
+    }
+    name
+  }
+}

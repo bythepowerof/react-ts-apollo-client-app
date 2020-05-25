@@ -11,8 +11,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import introspectionQueryResultData from '../../generated/fragmentTypes.json';
 
-// import BookListContainer from '../book/book-list/book-list-container.component';
-// import { AddBookComponent } from '../book/add-book/add-book.component';
+import { ResetSchedulerComponent } from '../kmake-object/reset-scheduler/reset-scheduler.component';
 import KmoListContainer from '../kmake-object/kmo-list/kmo-list-container.component';
 
 import './app.component.css'
@@ -58,7 +57,8 @@ const client = new ApolloClient({
 const AppComponent = () => (
   <ApolloProvider client={client}>
     <div className={'main'}>
-      <KmoListContainer namespace="default"/>
+    <KmoListContainer namespace="default"/>
+    <ResetSchedulerComponent/>
       {/* <BookListContainer/>
       <AddBookComponent /> */}
     </div>
