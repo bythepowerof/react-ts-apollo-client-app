@@ -14,6 +14,8 @@ import introspectionQueryResultData from '../../generated/fragmentTypes.json';
 import { ResetSchedulerComponent } from '../kmake-object/reset-scheduler/reset-scheduler.component';
 import KmoListContainer from '../kmake-object/kmo-list/kmo-list-container.component';
 
+import { TopBar } from '../menu/menu.component';
+
 import './app.component.css'
 
 const httpLink = new HttpLink({
@@ -56,7 +58,11 @@ const client = new ApolloClient({
 
 const AppComponent = () => (
   <ApolloProvider client={client}>
+        <div id={"topbar"} >
+          <TopBar/>
+          </div>
     <div className={'main'}>
+
     <KmoListContainer namespace="default"/>
     <ResetSchedulerComponent/>
       {/* <BookListContainer/>
