@@ -1,32 +1,183 @@
-# This file was generated based on ".graphqlconfig". Do not edit manually.
 
-schema {
-    query: RootQueryType
-    mutation: Mutation
+type Query {
+  namespaces(name: String): [Namespace]!
+
+  kmakeObjects(namespace: String!, name: String): [KmakeObject]!
+  kmakeschedulers(namespace: String!, name: String, monitor: String): [KmakeScheduler]!
+
+  kmakes(namespace: String!, kmake: String): [Kmake]!
+  kmakeruns(namespace: String!, kmake: String, jobtype: JobType, kmakerun: String): [KmakeRun]!
+  kmakescheduleruns(namespace: String!, kmake: String, kmakerun: String, kmakescheduler: String, name: String, runtype: RunType): [KmakeScheduleRun]!
+
 }
 
-type Author {
-    age: Int
-    books: [Book]
-    id: ID
-    name: String
+input NewReset {
+  namespace: String!
+  kmakescheduler: String!
+  full: Boolean!
 }
 
-type Book {
-    author: Author
-    genre: String
-    id: ID
-    name: String
+input RunLevelIn {
+  namespace: String!
+  kmakerun: String!
+  kmakescheduler: String!
+}
+
+input SubNamespace {
+  namespace: String!
 }
 
 type Mutation {
-    addAuthor(age: Int!, name: String!): Author
-    addBook(authorId: ID!, genre: String!, name: String!): Book
+  reset(input: NewReset!): KmakeScheduleRun!
+  stop(input: RunLevelIn!): KmakeScheduleRun!
+  restart(input: RunLevelIn!): KmakeScheduleRun!
 }
 
-type RootQueryType {
-    author(id: ID): Author
-    authors: [Author]
-    book(id: ID): Book
-    books: [Book]
+type Subscription {
+  changed(input: SubNamespace): KmakeObject!
+}
+
+type Namespace {
+  name: String!
+  kmakes(name: String): [Kmake]!
+}
+
+enum JobType {
+  JOB
+  DUMMY
+  FILEWAIT
+}
+
+enum RunType {
+	START
+	RESTART
+	STOP
+	DELETE
+	CREATE
+	RESET
+	FORCE
+}
+
+type Kmake implements KmakeObject{
+  name: String!
+  namespace: String!
+  status: String!
+  variables: [KV]!
+  rules: [Rule]!
+  runs(jobtype: JobType, name: String): [KmakeRun]!
+}
+
+type KV {
+  key: String!
+  value: String!
+}
+
+type Rule {
+  targets:       [String]!
+  doublecolon:   Boolean!
+  commands:      [String]!
+  prereqs:       [String]!
+  targetpattern: String!
+}
+
+type KmakeRun implements KmakeObject {
+  name: String!
+  namespace: String!
+  status: String!
+  kmakename: String
+  operation: KmakeRunOp
+  schedulerun(kmakescheduler: String, name: String, runtype: RunType): [KmakeScheduleRun]
+}
+
+type KmakeRunJob implements KmakeRunOp{
+  dummy: String!
+  targets: [String]!
+  image: String!
+  command: [String]
+  args: [String]
+}
+
+type KmakeRunDummy implements KmakeRunOp{
+  dummy: String!
+}
+
+type KmakeRunFileWait implements KmakeRunOp{
+  dummy: String!
+  files: [String!]
+}
+
+type KmakeScheduleRun implements KmakeObject{
+  name: String!
+  namespace: String!
+  status: String!
+  kmakename: String
+  kmakerunname: String
+  kmakeschedulename: String
+  operation: KmakeScheduleRunOp!
+}
+
+type KmakeScheduleRunStart implements KmakeScheduleRunOp {
+    dummy: String!
+}
+
+type KmakeScheduleRunRestart implements KmakeScheduleRunOp {
+  dummy: String!
+	run: String!
+}
+
+type KmakeScheduleRunStop implements KmakeScheduleRunOp {
+  dummy: String!
+	run: String!
+}
+
+type KmakeScheduleDelete implements KmakeScheduleRunOp {
+  dummy: String!
+}
+
+type KmakeScheduleCreate implements KmakeScheduleRunOp {
+  dummy: String!
+
+}
+
+type KmakeScheduleReset implements KmakeScheduleRunOp {
+  dummy: String!
+	recurse: String!
+	full:    String!
+}
+
+type KmakeScheduleForce implements KmakeScheduleRunOp {
+  dummy: String!
+	operation: String!
+	recurse:   String!
+}
+
+type KmakeNowScheduler implements KmakeScheduler & KmakeObject{
+	name: String
+	namespace: String
+  status: String
+	variables: [KV]
+	monitor: [String]
+  scheduleruns( kmake: String, kmakerun: String, name: String, runtype: RunType): [KmakeScheduleRun]!
+}
+
+interface KmakeScheduler {
+	name: String
+	namespace: String
+  status: String
+	variables: [KV]
+	monitor: [String]
+}
+
+interface KmakeObject {
+	name: String
+	namespace: String
+  status: String
+}
+
+interface KmakeRunOp {
+  dummy: String
+}
+
+interface KmakeScheduleRunOp {
+  dummy: String
 }
