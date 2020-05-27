@@ -15,6 +15,9 @@ import { ResetSchedulerComponent } from '../kmake-object/reset-scheduler/reset-s
 import KmoListContainer from '../kmake-object/kmo-list/kmo-list-container.component';
 
 import { TopBar } from '../menu/menu.component';
+import { Box, Button, Grommet, grommet } from 'grommet';
+import { normalizeColor } from 'grommet/utils';
+import { rgba } from 'polished';
 
 import './app.component.css'
 
@@ -50,25 +53,32 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 
 const cache = new InMemoryCache({ fragmentMatcher });
 
-
 const client = new ApolloClient({
   cache,
   link
 })
 
 const AppComponent = () => (
-  <ApolloProvider client={client}>
-        <div id={"topbar"} >
-          <TopBar/>
-          </div>
-    <div className={'main'}>
+  <Grommet theme={grommet}>
 
-    <KmoListContainer namespace="default"/>
-    <ResetSchedulerComponent/>
-      {/* <BookListContainer/>
-      <AddBookComponent /> */}
-    </div>
-  </ApolloProvider>
+    <ApolloProvider client={client}>
+      <div id={"topbar"} >
+        <TopBar>
+          <Button>Features</Button>
+          <Button>Enterprise</Button>
+          <Button>Support</Button>
+          <Button color="primary">
+            Login
+            </Button>
+        </TopBar>
+      </div>
+      <div className={'main'}>
+        <KmoListContainer namespace="default" />
+        <ResetSchedulerComponent />
+      </div>
+    </ApolloProvider>
+  </Grommet>
+
 );
 
 export default AppComponent;
