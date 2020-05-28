@@ -1,24 +1,5 @@
 
-export const MutationResponse = [{
-
-    "kmakeObjects": [
-        {
-            "kmakename": "",
-            "kmakerunname": "",
-            "kmakeschedulename": "kmakenowscheduler-sample",
-            "operation": {
-                "__typename": "KmakeScheduleReset"
-            },
-            "name": "kmakenowscheduler-reset-gql-cgvpf"
-        }
-    ]
-}
-]
-    }
-}]
-
-
-export const QueryResponse = [
+[
     {
         "__typename": "KmakeNowScheduler",
         "name": "kmakenowscheduler-sample",
@@ -276,56 +257,3 @@ export const QueryResponse = [
     }
 ]
 
-
-export const ChangedResponse = [
-    {
-        "data": {
-            "changed": {
-                "__typename": "Kmake",
-                "name": "kmake-wordpress",
-                "namespace": "default",
-                "status": "Provision PVC (kmake-wordpress-pvc-kxdb6)"
-            }
-        }
-    },
-    {
-        "data": {
-            "changed": {
-                "__typename": "Kmake",
-                "name": "kmake-wordpress",
-                "namespace": "default",
-                "status": "Provision PVC (kmake-wordpress-pvc-kxdb6)"
-            }
-        }
-    },
-    {
-        "data": {
-            "changed": {
-                "__typename": "Kmake",
-                "name": "kmake-wordpress",
-                "namespace": "default",
-                "status": "BackOff PVC (kmake-wordpress-pvc-kxdb6)"
-            }
-        }
-    },
-    {
-        "data": {
-            "changed": {
-                "__typename": "Kmake",
-                "name": "kmake-wordpress",
-                "namespace": "default",
-                "status": "Provision PVC (kmake-wordpress-pvc-kxdb6)"
-            }
-        }
-    },
-    {
-        "data": {
-            "changed": {
-                "__typename": "Kmake",
-                "name": "kmake-wordpress",
-                "namespace": "default",
-                "status": "Ready Main"
-            }
-        }
-    }
-]
